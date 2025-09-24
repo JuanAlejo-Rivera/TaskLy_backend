@@ -6,11 +6,8 @@ export class TaskController {
 
         try {
             const task = new Task(req.body)
-            // 🔗 Asociamos la tarea al proyecto
             task.project = req.project.id
-            // 📌 Agregamos el ID de la tarea al array de tareas del proyecto
             req.project.tasks.push(task.id)
-            // 💾 Guardamos ambos documentos en la base de datos
             await Promise.allSettled([task.save(), req.project.save()])
 
             res.send('Tarea creada con éxito')
